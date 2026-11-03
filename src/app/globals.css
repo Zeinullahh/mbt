@@ -536,3 +536,11 @@ footer p, footer > span { font-size: 12px; }
   .timeline-step p, .service-answer p { font-size: 16px; }
 }
 .signal-path, .visual-label { display: none; }
+
+footer { grid-template-columns: 1fr auto auto auto; gap: 28px; }
+footer > a[href^="mailto:"] { color: rgba(255,255,255,.86); font-size: 13px; overflow-wrap: anywhere; }
+@media (max-width: 780px) {
+  footer { grid-template-columns: 1fr auto; gap: 16px; }
+  footer > a[href^="mailto:"] { grid-column: 1 / -1; }
+  footer > span { grid-column: 2; grid-row: 1; }
+}
