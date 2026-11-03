@@ -173,7 +173,7 @@ h2 { font-size: clamp(42px, 5vw, 74px); }
 .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 37px; }
 .tech-tags span { padding: 9px 12px; border: 1px solid rgba(11,132,212,.28); border-radius: 50px; color: #17466a; font-size: 9px; letter-spacing: .07em; }
 
-.process { display: block; padding-top: 95px; padding-bottom: 105px; background: #f7fafb; }
+.process { display: block; padding-top: 95px; padding-bottom: 105px; color: #fff; background: linear-gradient(90deg, rgba(3,20,36,.87), rgba(4,29,50,.76)), url('/media/connected-fiber-infrastructure-network.png') center / cover no-repeat #061827; }
 .process-content .section-heading { grid-column: auto; }
 .timeline { position: relative; }
 .timeline-step { position: relative; z-index: 1; }
@@ -577,18 +577,17 @@ footer > a[href^="mailto:"] { color: rgba(255,255,255,.86); font-size: 13px; ove
 .company-project-caption span { color: #8bdfff; font-size: 13px; font-weight: 700; }
 .company-project-caption h3 { margin: 0; font-size: 19px; line-height: 1.25; }
 
-/* The process image and three rows of cards use the full section width. */
+/* The process collage sits behind the three rows of cards. */
 .process .section-index { margin-bottom: 18px; }
+.process .section-index p, .process .section-heading h2 { color: #fff; }
+.process .section-index span, .process .section-kicker { color: #91e4ff; }
 .process .section-heading { max-width: 1050px; }
-.process-visual { position: relative; aspect-ratio: 2.3; max-height: 530px; margin-top: 40px; overflow: hidden; border-radius: 20px; background: #0b3454; box-shadow: 0 24px 55px rgba(7,42,70,.16); }
-.process-visual img { object-fit: cover; object-position: center; }
-.process-visual::after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgba(2,18,33,.68)); pointer-events: none; }
-.process-visual span { position: absolute; z-index: 1; right: 22px; bottom: 20px; padding: 8px 11px; border: 1px solid rgba(255,255,255,.35); border-radius: 8px; background: rgba(4,27,46,.7); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .03em; }
+.process-image-note { margin: 22px 0 0; color: rgba(226,244,255,.72); font-size: 11px; text-align: right; }
 .process .timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 40px; padding-left: 44px; }
 .process .timeline::before, .process .timeline::after { content: ""; position: absolute; left: 19px; width: 3px; border-radius: 3px; pointer-events: none; }
-.process .timeline::before { top: var(--timeline-rail-start, 40px); height: var(--timeline-rail-length, 0px); background: #d7e6ee; }
+.process .timeline::before { top: var(--timeline-rail-start, 40px); height: var(--timeline-rail-length, 0px); background: rgba(230,246,255,.4); }
 .process .timeline::after { top: var(--timeline-rail-start, 40px); height: var(--timeline-scroll-fill, 0px); background: linear-gradient(#0b84d4, #67d9ff); box-shadow: 0 0 13px rgba(11,132,212,.38); }
-.process .timeline-step { min-width: 0; min-height: 210px; padding: 24px 27px; border: 1px solid var(--line); border-radius: 16px; background: #fff; cursor: pointer; transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease, background .35s ease; }
+.process .timeline-step { min-width: 0; min-height: 210px; padding: 24px 27px; border: 1px solid rgba(255,255,255,.7); border-radius: 16px; color: var(--ink); background: rgba(255,255,255,.94); backdrop-filter: blur(10px); cursor: pointer; transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease, background .35s ease; }
 .process .timeline-check { position: absolute; z-index: 3; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; min-height: 0; aspect-ratio: 1; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; touch-action: manipulation; }
 .process .timeline-check::before { content: ""; display: block; width: 18px; height: 18px; aspect-ratio: 1; border: 2px solid #a7c6d6; border-radius: 50%; background: #fff; transition: border-color .2s ease, background .2s ease, box-shadow .2s ease; }
 .process .timeline-check:focus-visible { outline: 3px solid #67d9ff; outline-offset: 3px; }
@@ -619,8 +618,7 @@ footer > a[href^="mailto:"] { color: rgba(255,255,255,.86); font-size: 13px; ove
   .process .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 780px) {
-  .process-visual { aspect-ratio: 1.15; max-height: 340px; margin-top: 30px; }
-  .process-visual span { right: 12px; bottom: 12px; font-size: 10px; }
+  .process { background-position: center, 58% center; }
   .process .timeline { grid-template-columns: 1fr; gap: 16px; }
   .process .timeline-step { min-height: 0; padding: 22px; }
   .process .timeline-check { top: 18px; right: auto; left: -44px; }

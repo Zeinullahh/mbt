@@ -189,10 +189,6 @@ export default function Home() {
   <div className="section-index" data-reveal><span>03</span><p>Этапы</p></div>
   <div className="process-content">
     <div className="section-heading" data-reveal><p className="section-kicker">От обследования до поддержки</p><h2>Девять этапов. <em>Одна ответственность.</em></h2></div>
-    <div className="process-visual" data-reveal>
-      <Image src="/media/connected-fiber-infrastructure-network.png" alt="Визуализация инфраструктуры связи: оптоволокно, оборудование, монтаж и здания" fill sizes="(max-width: 780px) 90vw, 84vw" />
-      <span>Визуализация инфраструктуры связи</span>
-    </div>
     <div className="timeline" ref={timelineRef}>
       {stages.map(([number, title, description], index) => <article
         className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}${completedStage >= index ? ' is-checked' : ''}`}
@@ -214,6 +210,7 @@ export default function Home() {
         {index === 8 && <div className="timeline-support-details"><div><strong>Гарантия</strong><span>Сервис построенной сети</span></div><div><strong>Восстановление</strong><span>Аварийные работы на линии</span></div></div>}
       </article>)}
     </div>
+    <p className="process-image-note">Фон: визуализация инфраструктуры связи</p>
   </div>
 </section>
 
