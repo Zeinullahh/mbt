@@ -50,7 +50,10 @@ function Arrow({ down = false }) {
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
-    const heroRef = useRef(null);
+  const [activeStage, setActiveStage] = useState(-1);
+  const [revealedStages, setRevealedStages] = useState([]);
+  const heroRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -90,6 +93,26 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const timeline = timelineRef.current;
+    if (!timeline) return undefined;
+
+    const cards = [...timeline.querySelectorAll('.timeline-step')];
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (!visible.length) return;
+      setRevealedStages((current) => {
+        const next = new Set(current);
+        visible.forEach((entry) => next.add(cards.indexOf(entry.target)));
+        return next.size === current.length ? current : [...next];
+      });
+      visible.forEach((entry) => observer.unobserve(entry.target));
+    }, { threshold: 0.25 });
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -114,8 +137,18 @@ export default function Home() {
   <div className="section-index" data-reveal><span>03</span><p>Этапы</p></div>
   <div className="process-content">
     <div className="section-heading" data-reveal><p className="section-kicker">От обследования до поддержки</p><h2>Девять этапов. <em>Одна ответственность.</em></h2></div>
-    <div className="timeline">
-      {stages.map(([number, title, description], index) => <article className={index === 8 ? 'timeline-step timeline-step-support' : 'timeline-step'} key={number}>
+    <div className="timeline" ref={timelineRef} style={{ '--timeline-progress': `${Math.max(0, ...revealedStages.map((index) => index + 1)) / stages.length * 100}%` }}>
+      {stages.map(([number, title, description], index) => <article
+        className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}`}
+        key={number}
+        style={{ '--stage-delay': `${index % 3 * 80}ms` }}
+        tabIndex={0}
+        onPointerEnter={() => setActiveStage(index)}
+        onPointerDown={() => setActiveStage(index)}
+        onPointerLeave={(event) => { if (event.pointerType === 'mouse') setActiveStage(-1); }}
+        onFocus={() => setActiveStage(index)}
+        onBlur={() => setActiveStage(-1)}
+      >
         <span className="timeline-number">{number}</span>
         <h3>{title}</h3>
         <p>{description}</p>
