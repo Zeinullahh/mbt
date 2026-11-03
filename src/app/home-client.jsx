@@ -51,7 +51,8 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [activeStage, setActiveStage] = useState(-1);
-  const [checkedStage, setCheckedStage] = useState(-1);
+  const [scrollStage, setScrollStage] = useState(-1);
+  const [selectedStage, setSelectedStage] = useState(-1);
   const [revealedStages, setRevealedStages] = useState([]);
   const heroRef = useRef(null);
   const timelineRef = useRef(null);
@@ -112,37 +113,59 @@ export default function Home() {
 
     cards.forEach((card) => observer.observe(card));
 
+    const dots = [...timeline.querySelectorAll('.timeline-check')];
     let frame = 0;
-    const updateMobileRail = () => {
+    let previousScrollY = window.scrollY;
+    const updateRail = () => {
       if (frame) return;
       frame = requestAnimationFrame(() => {
-        const first = cards[0]?.querySelector('.timeline-check')?.getBoundingClientRect();
-        const last = cards[cards.length - 1]?.querySelector('.timeline-check')?.getBoundingClientRect();
-        if (first && last) {
+        const centers = dots.map((dot) => {
+          const rect = dot.getBoundingClientRect();
+          return rect.top + rect.height / 2;
+        });
+        if (centers.length) {
           const timelineTop = timeline.getBoundingClientRect().top;
-          const firstCenter = first.top + first.height / 2;
-          const lastCenter = last.top + last.height / 2;
+          const firstCenter = centers[0];
+          const lastCenter = centers[centers.length - 1];
           const length = Math.max(0, lastCenter - firstCenter);
-          const fill = Math.min(length, Math.max(0, window.innerHeight * 0.65 - firstCenter));
+          const marker = window.innerHeight * 0.65;
+          const fill = Math.min(length, Math.max(0, marker - firstCenter));
           timeline.style.setProperty('--timeline-rail-start', `${firstCenter - timelineTop}px`);
           timeline.style.setProperty('--timeline-rail-length', `${length}px`);
           timeline.style.setProperty('--timeline-scroll-fill', `${fill}px`);
+          const nextStage = centers.findLastIndex((center) => center <= marker);
+          setScrollStage((current) => current === nextStage ? current : nextStage);
         }
         frame = 0;
       });
     };
-    window.addEventListener('scroll', updateMobileRail, { passive: true });
-    window.addEventListener('resize', updateMobileRail);
-    updateMobileRail();
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - previousScrollY) > 1) setSelectedStage(-1);
+      previousScrollY = window.scrollY;
+      updateRail();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateRail);
+    updateRail();
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', updateMobileRail);
-      window.removeEventListener('resize', updateMobileRail);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateRail);
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const completedStage = selectedStage >= 0 ? selectedStage : scrollStage;
+  const selectStage = (index) => {
+    setSelectedStage(index);
+    const dots = timelineRef.current?.querySelectorAll('.timeline-check');
+    if (!dots?.length) return;
+    const first = dots[0].getBoundingClientRect();
+    const target = dots[index].getBoundingClientRect();
+    const fill = target.top + target.height / 2 - first.top - first.height / 2;
+    timelineRef.current.style.setProperty('--timeline-scroll-fill', `${Math.max(0, fill)}px`);
+  };
 
   return (
     <main>
@@ -166,19 +189,21 @@ export default function Home() {
   <div className="section-index" data-reveal><span>03</span><p>Этапы</p></div>
   <div className="process-content">
     <div className="section-heading" data-reveal><p className="section-kicker">От обследования до поддержки</p><h2>Девять этапов. <em>Одна ответственность.</em></h2></div>
-    <div className="timeline" ref={timelineRef} style={{ '--timeline-progress': `${Math.max(0, ...revealedStages.map((index) => index + 1)) / stages.length * 100}%` }}>
+    <div className="timeline" ref={timelineRef}>
       {stages.map(([number, title, description], index) => <article
-        className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}${checkedStage >= index ? ' is-checked' : ''}`}
+        className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}${completedStage >= index ? ' is-checked' : ''}`}
         key={number}
-        style={{ '--stage-delay': `${index % 3 * 80}ms` }}
-        onPointerEnter={() => setActiveStage(index)}
+        style={{ '--stage-delay': `${index * 30}ms` }}
+        onPointerEnter={(event) => { if (event.pointerType === 'mouse') setActiveStage(index); }}
         onPointerDown={() => setActiveStage(index)}
+        onPointerUp={(event) => { if (event.pointerType !== 'mouse') setActiveStage(-1); }}
+        onPointerCancel={() => setActiveStage(-1)}
         onPointerLeave={(event) => { if (event.pointerType === 'mouse') setActiveStage(-1); }}
         onFocus={() => setActiveStage(index)}
         onBlur={() => setActiveStage(-1)}
-        onClick={() => setCheckedStage(index)}
+        onClick={() => selectStage(index)}
       >
-        <button className="timeline-check" type="button" aria-label={`Отметить этап ${number}: ${title} и все предыдущие`} aria-pressed={checkedStage >= index} onClick={() => setCheckedStage(index)} />
+        <button className="timeline-check" type="button" aria-label={`Отметить этап ${number}: ${title} и все предыдущие`} aria-pressed={completedStage >= index} />
         <span className="timeline-number">{number}</span>
         <h3>{title}</h3>
         <p>{description}</p>
