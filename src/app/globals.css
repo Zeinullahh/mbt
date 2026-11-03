@@ -429,3 +429,110 @@ footer p { text-align: center; } footer > span { text-align: right; }
   .hero-image { transform: none !important; }
   .motion-ready [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Readable navigation and compact, executive focused content. */
+.main-nav a { font-size: 14px; letter-spacing: .02em; text-transform: none; }
+.header-contact { font-size: 13px; }
+.hero .eyebrow, .section-kicker, .section-index p { font-size: 14px; letter-spacing: .07em; }
+.hero-lead { font-size: 19px; }
+.hero-contacts .button { min-width: 220px; }
+.hero-contacts small { font-size: 12px; }
+.hero-contacts strong { font-size: 15px; }
+.section-index span, .service-number { font-size: 14px; }
+.tech-image-inset span { font-size: 14px; }
+.project-caption p, .project-caption small { display: none; }
+.assurance-cards article { min-height: 160px; }
+.assurance-cards h3 { margin-top: 30px; font-size: 20px; }
+.assurance-cards p { font-size: 16px; }
+.contact-panel > p, .contact-panel a > span:first-child, .contact-panel address > span { font-size: 13px; }
+footer p, footer > span { font-size: 12px; }
+
+@media (max-width: 780px) {
+  .main-nav a { font-size: 17px; }
+  .hero-content { padding-bottom: 176px; }
+  .hero-lead { font-size: 17px; }
+  .hero-contacts { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-contacts .button { width: 100%; min-width: 0; }
+  .hero-status > div:last-child { display: grid; }
+  .hero-status strong { font-size: 15px; }
+  .assurance-cards { margin-top: 30px; }
+}
+@media (max-width: 540px) {
+  .hero-contacts { grid-template-columns: 1fr; }
+  .hero-contacts .button { min-height: 58px; }
+  .hero-contacts .button strong { font-size: 15px; }
+  .hero-content { padding-bottom: 205px; }
+  .hero-status > div:last-child { display: none; }
+  .timeline-step p, .service-answer p { font-size: 16px; }
+}
+
+/* Readable navigation and compact, executive focused content. */
+.main-nav a { font-size: 14px; letter-spacing: .02em; text-transform: none; }
+.header-contact { font-size: 13px; }
+.hero .eyebrow, .section-kicker, .section-index p { font-size: 14px; letter-spacing: .07em; }
+.hero-lead { font-size: 19px; }
+.hero-contacts .button { min-width: 220px; }
+.hero-contacts small { font-size: 12px; }
+.hero-contacts strong { font-size: 15px; }
+.section-index span, .service-number { font-size: 14px; }
+.tech-image-inset span { font-size: 14px; }
+.project-caption p, .project-caption small { display: none; }
+.assurance-cards article { min-height: 160px; }
+.assurance-cards h3 { margin-top: 30px; font-size: 20px; }
+.assurance-cards p { font-size: 16px; }
+.contact-panel > p, .contact-panel a > span:first-child, .contact-panel address > span { font-size: 13px; }
+footer p, footer > span { font-size: 12px; }
+@media (max-width: 780px) {
+  .main-nav a { font-size: 17px; }
+  .hero-content { padding-bottom: 176px; }
+  .hero-lead { font-size: 17px; }
+  .hero-contacts { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-contacts .button { width: 100%; min-width: 0; }
+  .hero-status > div:last-child { display: grid; }
+  .hero-status strong { font-size: 15px; }
+  .assurance-cards { margin-top: 30px; }
+}
+@media (max-width: 540px) {
+  .hero-contacts { grid-template-columns: 1fr; }
+  .hero-contacts .button { min-height: 58px; }
+  .hero-contacts .button strong { font-size: 15px; }
+  .hero-content { padding-bottom: 205px; }
+  .hero-status > div:last-child { display: none; }
+  .timeline-step p, .service-answer p { font-size: 16px; }
+}
+
+/* Readable navigation and compact, executive focused content. */
+.main-nav a { font-size: 14px; letter-spacing: .02em; text-transform: none; }
+.header-contact { font-size: 13px; }
+.hero .eyebrow, .section-kicker, .section-index p { font-size: 14px; letter-spacing: .07em; }
+.hero-lead { font-size: 19px; }
+.hero-contacts .button { min-width: 220px; }
+.hero-contacts small { font-size: 12px; }
+.hero-contacts strong { font-size: 15px; }
+.section-index span, .service-number { font-size: 14px; }
+.tech-image-inset span { font-size: 14px; }
+.project-caption p, .project-caption small { display: none; }
+.assurance-cards article { min-height: 160px; }
+.assurance-cards h3 { margin-top: 30px; font-size: 20px; }
+.assurance-cards p { font-size: 16px; }
+.contact-panel > p, .contact-panel a > span:first-child, .contact-panel address > span { font-size: 13px; }
+footer p, footer > span { font-size: 12px; }
+@media (max-width: 780px) {
+  .main-nav a { font-size: 17px; }
+  .hero-content { padding-bottom: 176px; }
+  .hero-lead { font-size: 17px; }
+  .hero-contacts { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-contacts .button { width: 100%; min-width: 0; }
+  .hero-status > div:last-child { display: grid; }
+  .hero-status strong { font-size: 15px; }
+  .assurance-cards { margin-top: 30px; }
+}
+@media (max-width: 540px) {
+  .hero-contacts { grid-template-columns: 1fr; }
+  .hero-contacts .button { min-height: 58px; }
+  .hero-contacts .button strong { font-size: 15px; }
+  .hero-content { padding-bottom: 205px; }
+  .hero-status > div:last-child { display: none; }
+  .timeline-step p, .service-answer p { font-size: 16px; }
+}
+.signal-path, .visual-label { display: none; }
