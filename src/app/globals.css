@@ -222,7 +222,9 @@ h2 { font-size: clamp(42px, 5vw, 74px); }
 .assurance-cards article { min-height: 185px; padding: 22px; border-radius: 16px; }
 .assurance-cards span { color: #83dcff; font-size: 9px; }.assurance-cards h3 { margin: 42px 0 10px; font-size: 17px; }.assurance-cards p { margin: 0; color: rgba(255,255,255,.68); font-size: 11px; line-height: 1.6; }
 
-.contacts { display: grid; grid-template-columns: 55% 45%; gap: 6vw; padding: 125px 8vw; background: linear-gradient(135deg, #edf6f9, #f9fbfc); }
+.contacts { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 6vw; padding: 125px 8vw; background: linear-gradient(135deg, #edf6f9, #f9fbfc); }
+.contact-lead { min-width: 0; }
+.contact-lead h2 { overflow-wrap: anywhere; }
 .contact-lead h2 { margin: 22px 0 42px; }
 .contact-panel { align-self: center; padding: 28px; border-color: rgba(11,75,118,.14); border-radius: 18px; color: var(--ink); background: rgba(255,255,255,.5); }
 .contact-panel > p { margin: 0 0 22px; color: #71899a; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; }
@@ -547,12 +549,20 @@ footer > a[href^="mailto:"] { color: rgba(255,255,255,.86); font-size: 13px; ove
 
 /* The two existing photographs now belong to the results section. */
 .stats-section { grid-template-columns: minmax(220px, .75fr) minmax(350px, 1.2fr) minmax(260px, 1fr); gap: 22px; align-items: stretch; }
-.stats-intro { padding-right: 1vw; }
+.stats-intro { min-width: 0; padding-right: 1vw; }
+.stats-intro h2 { font-size: clamp(34px, 2.5vw, 44px); overflow-wrap: anywhere; }
+.stats-grid { min-width: 0; }
+.stat-card strong { font-size: clamp(34px, 2.7vw, 48px); white-space: nowrap; }
 .stats-section .technology-gallery { min-height: 372px; border-radius: 18px; }
 .stats-section .tech-image-main { inset: 0; }
 .stats-section .tech-image-inset { right: 16px; bottom: 16px; width: 55%; height: 43%; }
+@media (max-width: 1600px) and (min-width: 1101px) {
+  .stats-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats-intro { grid-column: 1 / -1; }
+}
 @media (max-width: 1100px) {
-  .stats-section { grid-template-columns: minmax(210px, .75fr) minmax(320px, 1.25fr); }
+  .stats-section { grid-template-columns: minmax(0, 1fr); }
+  .stats-intro, .stats-grid { grid-column: 1; }
   .stats-section .technology-gallery { grid-column: 1 / -1; min-height: 390px; }
   .stats-section .tech-image-inset { width: 30%; }
 }
