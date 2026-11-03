@@ -544,3 +544,24 @@ footer > a[href^="mailto:"] { color: rgba(255,255,255,.86); font-size: 13px; ove
   footer > a[href^="mailto:"] { grid-column: 1 / -1; }
   footer > span { grid-column: 2; grid-row: 1; }
 }
+
+/* The two existing photographs now belong to the results section. */
+.stats-section { grid-template-columns: minmax(220px, .75fr) minmax(350px, 1.2fr) minmax(260px, 1fr); gap: 22px; align-items: stretch; }
+.stats-intro { padding-right: 1vw; }
+.stats-section .technology-gallery { min-height: 372px; border-radius: 18px; }
+.stats-section .tech-image-main { inset: 0; }
+.stats-section .tech-image-inset { right: 16px; bottom: 16px; width: 55%; height: 43%; }
+@media (max-width: 1100px) {
+  .stats-section { grid-template-columns: minmax(210px, .75fr) minmax(320px, 1.25fr); }
+  .stats-section .technology-gallery { grid-column: 1 / -1; min-height: 390px; }
+  .stats-section .tech-image-inset { width: 30%; }
+}
+@media (max-width: 780px) {
+  .stats-section { display: grid; grid-template-columns: 1fr; }
+  .stats-section .technology-gallery { grid-column: 1; min-height: 430px; }
+  .stats-section .tech-image-inset { width: 42%; }
+}
+@media (max-width: 540px) {
+  .stats-section .technology-gallery { min-height: 320px; }
+  .stats-section .tech-image-inset { width: 47%; height: 45%; }
+}
