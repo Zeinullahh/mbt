@@ -51,6 +51,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [activeStage, setActiveStage] = useState(-1);
+  const [checkedStage, setCheckedStage] = useState(-1);
   const [revealedStages, setRevealedStages] = useState([]);
   const heroRef = useRef(null);
   const timelineRef = useRef(null);
@@ -110,7 +111,35 @@ export default function Home() {
     }, { threshold: 0.25 });
 
     cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
+
+    let frame = 0;
+    const updateMobileRail = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        const first = cards[0]?.querySelector('.timeline-check')?.getBoundingClientRect();
+        const last = cards[cards.length - 1]?.querySelector('.timeline-check')?.getBoundingClientRect();
+        if (first && last) {
+          const timelineTop = timeline.getBoundingClientRect().top;
+          const firstCenter = first.top + first.height / 2;
+          const lastCenter = last.top + last.height / 2;
+          const length = Math.max(0, lastCenter - firstCenter);
+          const fill = Math.min(length, Math.max(0, window.innerHeight * 0.65 - firstCenter));
+          timeline.style.setProperty('--timeline-rail-start', `${firstCenter - timelineTop}px`);
+          timeline.style.setProperty('--timeline-rail-length', `${length}px`);
+          timeline.style.setProperty('--timeline-scroll-fill', `${fill}px`);
+        }
+        frame = 0;
+      });
+    };
+    window.addEventListener('scroll', updateMobileRail, { passive: true });
+    window.addEventListener('resize', updateMobileRail);
+    updateMobileRail();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', updateMobileRail);
+      window.removeEventListener('resize', updateMobileRail);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -139,16 +168,17 @@ export default function Home() {
     <div className="section-heading" data-reveal><p className="section-kicker">От обследования до поддержки</p><h2>Девять этапов. <em>Одна ответственность.</em></h2></div>
     <div className="timeline" ref={timelineRef} style={{ '--timeline-progress': `${Math.max(0, ...revealedStages.map((index) => index + 1)) / stages.length * 100}%` }}>
       {stages.map(([number, title, description], index) => <article
-        className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}`}
+        className={`timeline-step${index === 8 ? ' timeline-step-support' : ''}${revealedStages.includes(index) ? ' is-revealed' : ''}${activeStage === index ? ' is-active' : ''}${checkedStage >= index ? ' is-checked' : ''}`}
         key={number}
         style={{ '--stage-delay': `${index % 3 * 80}ms` }}
-        tabIndex={0}
         onPointerEnter={() => setActiveStage(index)}
         onPointerDown={() => setActiveStage(index)}
         onPointerLeave={(event) => { if (event.pointerType === 'mouse') setActiveStage(-1); }}
         onFocus={() => setActiveStage(index)}
         onBlur={() => setActiveStage(-1)}
+        onClick={() => setCheckedStage(index)}
       >
+        <button className="timeline-check" type="button" aria-label={`Отметить этап ${number}: ${title} и все предыдущие`} aria-pressed={checkedStage >= index} onClick={() => setCheckedStage(index)} />
         <span className="timeline-number">{number}</span>
         <h3>{title}</h3>
         <p>{description}</p>
