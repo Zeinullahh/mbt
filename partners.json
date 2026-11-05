@@ -1,0 +1,26 @@
+[
+  {
+    "id": "bi-group",
+    "name": "BI Group",
+    "image": "/partners/bi-group.png",
+    "transparentImage": "/partners/transparent/bi-group.png"
+  },
+  {
+    "id": "beeline",
+    "name": "Beeline",
+    "image": "/partners/beeline.png",
+    "transparentImage": "/partners/transparent/beeline.png"
+  },
+  {
+    "id": "alliance",
+    "name": "Альянс",
+    "image": "/partners/alliance.png",
+    "transparentImage": "/partners/transparent/alliance.png"
+  },
+  {
+    "id": "allprof-telecom",
+    "name": "Allprof Telecom",
+    "image": "/partners/allprof-telecom.png",
+    "transparentImage": "/partners/transparent/allprof-telecom.png"
+  }
+]

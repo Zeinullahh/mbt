@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import PartnersMarquee from '../components/PartnersMarquee';
 import { useEffect, useRef, useState } from 'react';
 
 const services = [
@@ -215,6 +216,8 @@ export default function Home() {
 </section>
 
 <section className="services section-shell" id="services"><div className="section-index" data-reveal><span>04</span><p>Услуги</p></div><div className="section-heading" data-reveal><p className="section-kicker">Полный цикл ВОЛС</p><h2>Одна команда — <em>весь проект.</em></h2></div><div className="service-list" data-reveal>{services.map((service,index)=>{const open=activeService===index;return <article className={open?'service-item is-open':'service-item'} key={service.id}><button type="button" onClick={()=>setActiveService(open?-1:index)} aria-expanded={open}><span className="service-number">{service.id}</span><span className="service-title">{service.title}</span><span className="service-tag">{service.tag}</span><span className="service-toggle" aria-hidden="true">{open?'−':'+'}</span></button><div className="service-answer"><div><p>{service.text}</p></div></div></article>;})}</div></section>
+
+      <PartnersMarquee />
 
       <section className="contacts" id="contacts"><div className="contact-lead" data-reveal><p className="section-kicker">Обсудить проект</p><h2>Нужна надёжная<br/><em>оптическая сеть?</em></h2><a className="button button-blue" href="tel:+77711007766">Позвонить<Arrow/></a></div><div className="contact-panel glass-card" data-reveal><p>Связаться с компанией MBT Connection</p><a href="tel:+77711007766"><span>Телефон</span><strong>+7 771 100 77 66</strong><Arrow/></a><a href="mailto:info@mbtconnect.kz"><span>Почта</span><strong>info@mbtconnect.kz</strong><Arrow/></a><address><span>Адрес</span><strong>Казахстан, Кокшетау<br/>ул. Кошкарбаева, 188</strong></address></div></section><nav className="home-page-links" aria-label="Подробнее о компании"><a href="/services">Все услуги</a><a href="/projects">Реализованные объекты</a><a href="/contacts">Контакты компании</a></nav><footer><a className="brand" href="#top" aria-label="MBT Connection"><span className="brand-mark">MBT</span><span className="brand-name">CONNECTION</span></a><p>Проектирование · Строительство · Сервис</p><a href="mailto:info@mbtconnect.kz">info@mbtconnect.kz</a><span>© 2026 MBT Connection</span></footer>
     </main>
