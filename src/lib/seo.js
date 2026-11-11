@@ -10,19 +10,7 @@ export const baseUrl = siteUrl || 'http://localhost:3000';
 export const seoPages = {
   '/': {
     title: 'Строительство и проектирование ВОЛС в Казахстане | MBT Connection',
-    description: 'MBT Connection проектирует, строит и обслуживает волоконно-оптические линии связи в Казахстане. Монтаж, сварка, измерения OTDR, GPON и FTTH.',
-  },
-  '/services': {
-    title: 'Услуги по проектированию и строительству ВОЛС | MBT Connection',
-    description: 'Обследование, проектирование, согласование, строительство, монтаж и тестирование ВОЛС. Подключение GPON и FTTH, обслуживание линий связи.',
-  },
-  '/projects': {
-    title: 'Реализованные объекты ВОЛС | MBT Connection',
-    description: 'Опыт MBT Connection: ЖК Akbulak Rivera, Atlant, Nexpo City, Green Line Garden, Green Line Velora и ТРЦ «Керуен».',
-  },
-  '/contacts': {
-    title: 'Контакты MBT Connection в Кокшетау | ВОЛС Казахстан',
-    description: 'Свяжитесь с MBT Connection по вопросам проектирования, строительства и обслуживания ВОЛС. Телефон +7 771 100 77 66, Кокшетау.',
+    description: 'MBT Connection проектирует, строит и обслуживает ВОЛС по Казахстану. Услуги, этапы работ, реализованные объекты и контакты компании на одной странице.',
   },
 };
 
@@ -50,13 +38,7 @@ export function pageJsonLd(path) {
       { '@type': 'WebSite', '@id': `${baseUrl}/#website`, name: 'MBT Connection', url: baseUrl, inLanguage: 'ru' },
       { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: seoPages[path].title, description: seoPages[path].description, inLanguage: 'ru', isPartOf: { '@id': `${baseUrl}/#website` }, about: { '@id': `${baseUrl}/#organization` } },
     ];
-  if (path !== '/') graph.push({
-    '@type': 'BreadcrumbList', '@id': `${url}#breadcrumbs`, itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${baseUrl}/` },
-      { '@type': 'ListItem', position: 2, name: seoPages[path].title, item: url },
-    ],
-  });
-  if (path === '/services') graph.push({
+  graph.push({
     '@type': 'Service', '@id': `${url}#service`, name: 'Проектирование и строительство ВОЛС',
     serviceType: 'Проектирование, строительство и обслуживание волоконно-оптических линий связи',
     provider: { '@id': `${baseUrl}/#organization` }, areaServed: { '@type': 'Country', name: 'Казахстан' }, url,

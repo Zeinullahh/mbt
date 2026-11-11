@@ -1,5 +1,5 @@
 const origin = (process.argv[2] || 'http://localhost:3000').replace(/\/$/, '');
-const routes = ['/', '/services', '/projects', '/contacts'];
+const routes = ['/'];
 const titles = new Set();
 const descriptions = new Set();
 const errors = [];
@@ -43,6 +43,10 @@ for (const path of routes) {
   }
 }
 
+for (const path of ['/services', '/projects', '/contacts']) {
+  const oldPage = await get(path);
+  check(oldPage.response.status === 404, `${path}: expected HTTP 404`);
+}
 const missing = await get('/missing-seo-route');
 check(missing.response.status === 404, `missing route: HTTP ${missing.response.status}`);
 const robotsFile = await get('/robots.txt');
